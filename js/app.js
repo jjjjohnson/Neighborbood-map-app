@@ -34,8 +34,10 @@ var NYPlaces = [
 var Place = function(data) {
 	var self = this;
 	this.visible = ko.observable(true);
+	this.name = data.name;
 
-	this.infoWindow = new google.maps.InfoWindow({content: 'self.contentString'});
+	// TODO: add third-party api to self.info
+	this.infoWindow = new google.maps.InfoWindow({content: 'self.info'});
 	this.marker = new google.maps.Marker({
 			position: new google.maps.LatLng(data.lat, data.long),
 			title: data.name
@@ -50,6 +52,10 @@ var Place = function(data) {
     this.marker.addListener('click', function() {
     	self.infowindow.open(map, marker);
     });
+
+    this.showInfo = function() {
+		google.maps.event.trigger(self.marker, 'click');
+	};
 
 	// this.clickCount = ko.observable(data.clickCount);
 	// this.name = ko.observable(data.name);
@@ -72,23 +78,45 @@ var Place = function(data) {
 
 var ViewModel = function() {
 	var self = this;
+	this.searchText = ko.observable("");
 
 	this.placeList = ko.observableArray([]);
 	NYPlaces.forEach(function(data) {
 		self.catList.push(new Place(data));
 	});
 
-	this.currentCat = ko.observable( this.catList()[0] );
+	map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.7413549, lng: -73.99802439999996},
+        zoom: 13
+    });
 
-	// this represents the current cat's binding context ("with: currentCat")
-	this.incrementCounter = function() {
-		this.clickCount(this.clickCount() + 1);
-	};
+	this.filteredList = ko.computed( function() {
+		var input = self.searchTerm().toLowerCase();
+		if (!input) {
+			self.locationList().forEach(function(locationItem){
+				locationItem.visible(true);
+			});
+			return self.placeList();
+		} else {
+			return ko.utils.arrayFilter(self.placeList(), function(place) {
+				var placeName = locationItem.name.toLowerCase();
+				locationItem.visible((string.search(filter) >= 0));
+			});
+		}
+	}, self);
 
-	this.setCat = function(clickedCat) {
-		// console.log('hi');
-		self.currentCat(clickedCat);
-	};
+
+	// this.currentCat = ko.observable( this.catList()[0] );
+
+	// // this represents the current cat's binding context ("with: currentCat")
+	// this.incrementCounter = function() {
+	// 	this.clickCount(this.clickCount() + 1);
+	// };
+
+	// this.setCat = function(clickedCat) {
+	// 	// console.log('hi');
+	// 	self.currentCat(clickedCat);
+	// };
 
 	
 };

@@ -14,18 +14,16 @@
         </a>
     </header>
     <nav id="drawer" class="nav">
-      <ul class="nav__list">
-        <li class="nav__item"><a href="#">News</a></li>
-        <li class="nav__item"><a href="#">Events</a></li>
-        <li class="nav__item"><a href="#">Culture</a></li>
-        <li class="nav__item"><a href="#">Blog</a></li>
+      <input class="search-box" id="search-box" data-bind="textInput: searchText, valueUpdate: 'afterkeydown'" />
+      <ul class="results" id="results" data-bind="foreach: filteredList">
+        <li class="place" data-bind="text: name, click: showInfo"></li>
       </ul>
     </nav>
+    <div id="map"></div>
 
     <script>
-      /*
-       * Open the drawer when the menu icon is clicked.
-       */
+
+      //Open the drawer when the menu icon is clicked.
       var menu = document.querySelector('#menu');
       // var main = document.querySelector('main');
       var drawer = document.querySelector('.nav');
