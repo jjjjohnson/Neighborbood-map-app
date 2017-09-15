@@ -1,4 +1,6 @@
 var map;
+var openWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather?units=metric&';
+var key = 'APPID=e46508f239b4597aac188c42f13c9894';
 
 var NYPlaces = [
 	{
@@ -38,8 +40,27 @@ var Place = function(data) {
 	this.visible = ko.observable(true);
 	this.name = data.name;
 
-	// TODO: add third-party api to self.info
-	this.infoWindow = new google.maps.InfoWindow({content: 'self.info'});
+	// Add third-party api to self.info
+	var url = openWeatherUrl + key + '&lat=' + data.lat + '&lon=' + data.long;
+	console.log(url);
+	$.ajax({
+		url: url
+	}).done(function(json) {
+		console.log(json);
+		var parsed = loadJSON(json);
+		
+		self.info = `<div class="info">
+			<div><b>${self.name}<b></div>
+			<div>Weather: ${parsed.weather.description}</div>
+			<div>Temperature: ${parsed.main.temp} Celsius degree</div>
+			<div>Humidity: ${parsed.main.humidity} Celsius degree</div>
+		</div>`;
+	}).fail(function() {
+		alert('Cannot retrieve data from open weather!');
+	});
+
+	
+	this.infoWindow = new google.maps.InfoWindow({content: self.info});
 	this.marker = new google.maps.Marker({
 			position: new google.maps.LatLng(data.lat, data.long),
 			title: data.name
@@ -53,7 +74,6 @@ var Place = function(data) {
 			// now show on the map
 			this.marker.setMap();
 		}
-		// return true;
 	}, this);
 
     this.marker.addListener('click', function() {
@@ -105,8 +125,6 @@ var ViewModel = function() {
 		}
 	}, self);
 
-	// this.mapElem = document.getElementById('map');
-	// this.mapElem.style.height = window.innerHeight - 50;
 
 	
 };
