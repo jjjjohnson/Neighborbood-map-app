@@ -1,42 +1,39 @@
-var initialCats = [
-{
-	name : 'JJ',
-	clickCount : 0,
-	imgSrc : 'img/22252709_010df3379e_z.jpg',
-	imgAttribute : 'https://www.jj.com',
-	nickname : ['jj0', 'jj1', 'jj2', 'jj3', 'jj4']
-},
-{
-	name : 'JJ1',
-	clickCount : 0,
-	imgSrc : 'img/434164568_fea0ad4013_z.jpg',
-	imgAttribute : 'https://www.jj.com',
-	nickname : ['baobao']
-},
-{
-	name : 'JJ2',
-	clickCount : 0,
-	imgSrc : 'img/1413379559_412a540d29_z.jpg',
-	imgAttribute : 'https://www.jj.com',
-	nickname : ['qinqin']
-},
-{
-	name : 'JJ3',
-	clickCount : 0,
-	imgSrc : 'img/4154543904_6e2428c421_z.jpg',
-	imgAttribute : 'https://www.jj.com',
-	nickname : ['jigaogao']
-},
-{
-	name : 'JJ4',
-	clickCount : 0,
-	imgSrc : 'img/9648464288_2516b35537_z.jpg',
-	imgAttribute : 'https://www.jj.com',
-	nickname : ['papapa']	
-}
+var NYPlaces = [
+	{
+		name: 'Empire State Building',
+		lat: 40.748817,
+		long: -73.985428
+	},
+	{
+		name: 'Madison Square Garden',
+		lat: 40.750298,
+		long: -73.993324
+	},
+	{
+		name: 'Central Park',
+		lat: 40.785091,
+		long: -73.968285
+	},
+	{
+		name: 'Flatiron Building',
+		lat: 40.741534,
+		long:  -73.989747
+	},
+	{
+		name: '69th Regiment Armory',
+		lat: 40.741255,
+		long: -73.983894
+	},
+	{
+		name: 'Baruch College',
+		lat: 40.740190,
+		long:  -73.983347
+	}
 ];
 
-var Cat = function(data) {
+var Place = function(data) {
+	this.visible = ko.observable(true);
+	
 	this.clickCount = ko.observable(data.clickCount);
 	this.name = ko.observable(data.name);
 	this.imgSrc = ko.observable(data.imgSrc);
@@ -59,9 +56,9 @@ var Cat = function(data) {
 var ViewModel = function() {
 	var self = this;
 
-	this.catList = ko.observableArray([]);
-	initialCats.forEach(function(catItem) {
-		self.catList.push(new Cat(catItem));
+	this.placeList = ko.observableArray([]);
+	NYPlaces.forEach(function(data) {
+		self.catList.push(new Place(data));
 	});
 
 	this.currentCat = ko.observable( this.catList()[0] );
