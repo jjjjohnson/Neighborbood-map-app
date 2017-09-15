@@ -1,3 +1,5 @@
+var map;
+
 var NYPlaces = [
 	{
 		name: 'Empire State Building',
@@ -42,18 +44,25 @@ var Place = function(data) {
 			position: new google.maps.LatLng(data.lat, data.long),
 			title: data.name
 	});
+
 	this.showMarker = ko.computed(function() {
-		if (this.visible) {
+		if (self.visible()) {
 			// To add the marker to the map, call setMap();
-			this.marker.setMap(map);
+			self.marker.setMap(map);
+		} else {
+			// now show on the map
+			this.marker.setMap();
 		}
+		// return true;
 	}, this);
 
     this.marker.addListener('click', function() {
-    	self.infowindow.open(map, marker);
+    	self.infoWindow.open(map, self.marker);
     });
 
     this.showInfo = function() {
+    	// console.log(self.infoWindow);
+    	// self.infoWindow.close();
 		google.maps.event.trigger(self.marker, 'click');
 	};
 
@@ -77,35 +86,49 @@ var Place = function(data) {
 };
 
 var ViewModel = function() {
+
+	map = new google.maps.Map(document.getElementById('map'), {
+	    center: {lat: 40.7413549, lng: -73.99802439999996},
+	    zoom: 12
+    });
 	var self = this;
 	this.searchText = ko.observable("");
 
 	this.placeList = ko.observableArray([]);
 	NYPlaces.forEach(function(data) {
-		self.catList.push(new Place(data));
+		self.placeList.push(new Place(data));
 	});
 
-	map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.7413549, lng: -73.99802439999996},
-        zoom: 13
-    });
+
 
 	this.filteredList = ko.computed( function() {
-		var input = self.searchTerm().toLowerCase();
+		var input = self.searchText().toLowerCase();
 		if (!input) {
-			self.locationList().forEach(function(locationItem){
+
+
+			// console.log('No input');
+			self.placeList().forEach(function(locationItem){
 				locationItem.visible(true);
 			});
 			return self.placeList();
 		} else {
+			// ko.utils.arrayForEach(self.placeList(), function(place) {
+			// 	var placeName = place.name.toLowerCase();
+			// 	var find = (placeName.search(input) >= 0);
+			// 	place.visible(find);
+			// });
 			return ko.utils.arrayFilter(self.placeList(), function(place) {
-				var placeName = locationItem.name.toLowerCase();
-				locationItem.visible((string.search(filter) >= 0));
+				var placeName = place.name.toLowerCase();
+				// console.log(placeName.search(input));
+				var find = (placeName.search(input) >= 0);
+				place.visible(find);
+				return find;
 			});
 		}
 	}, self);
 
-
+	this.mapElem = document.getElementById('map');
+	this.mapElem.style.height = window.innerHeight - 50;
 	// this.currentCat = ko.observable( this.catList()[0] );
 
 	// // this represents the current cat's binding context ("with: currentCat")
@@ -121,4 +144,10 @@ var ViewModel = function() {
 	
 };
 
-ko.applyBindings(new ViewModel());
+function start() {
+	ko.applyBindings(new ViewModel());
+}
+
+function errorHandling() {
+	alert("Google Maps has failed to load. Please check your internet connection and try again.");
+}
