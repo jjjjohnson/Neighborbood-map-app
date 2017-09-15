@@ -32,25 +32,42 @@ var NYPlaces = [
 ];
 
 var Place = function(data) {
+	var self = this;
 	this.visible = ko.observable(true);
-	
-	this.clickCount = ko.observable(data.clickCount);
-	this.name = ko.observable(data.name);
-	this.imgSrc = ko.observable(data.imgSrc);
-	this.imgAttribute = ko.observable(data.imgAttribute);
-	this.header = ko.computed(function() {
-		if (this.clickCount() < 5) {
-			return 'infant';
-		} else if (this.clickCount() < 10) {
-			return 'baby';
-		} else if (this.clickCount() < 15) {
-			return 'teen';
-		} else {
-			return 'adult';
+
+	this.infoWindow = new google.maps.InfoWindow({content: 'self.contentString'});
+	this.marker = new google.maps.Marker({
+			position: new google.maps.LatLng(data.lat, data.long),
+			title: data.name
+	});
+	this.showMarker = ko.computed(function() {
+		if (this.visible) {
+			// To add the marker to the map, call setMap();
+			this.marker.setMap(map);
 		}
 	}, this);
 
-	this.nickname = ko.observableArray(data.nickname);
+    this.marker.addListener('click', function() {
+    	self.infowindow.open(map, marker);
+    });
+
+	// this.clickCount = ko.observable(data.clickCount);
+	// this.name = ko.observable(data.name);
+	// this.imgSrc = ko.observable(data.imgSrc);
+	// this.imgAttribute = ko.observable(data.imgAttribute);
+	// this.header = ko.computed(function() {
+	// 	if (this.clickCount() < 5) {
+	// 		return 'infant';
+	// 	} else if (this.clickCount() < 10) {
+	// 		return 'baby';
+	// 	} else if (this.clickCount() < 15) {
+	// 		return 'teen';
+	// 	} else {
+	// 		return 'adult';
+	// 	}
+	// }, this);
+
+	// this.nickname = ko.observableArray(data.nickname);
 };
 
 var ViewModel = function() {
