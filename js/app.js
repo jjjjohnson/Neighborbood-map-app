@@ -66,23 +66,6 @@ var Place = function(data) {
 		google.maps.event.trigger(self.marker, 'click');
 	};
 
-	// this.clickCount = ko.observable(data.clickCount);
-	// this.name = ko.observable(data.name);
-	// this.imgSrc = ko.observable(data.imgSrc);
-	// this.imgAttribute = ko.observable(data.imgAttribute);
-	// this.header = ko.computed(function() {
-	// 	if (this.clickCount() < 5) {
-	// 		return 'infant';
-	// 	} else if (this.clickCount() < 10) {
-	// 		return 'baby';
-	// 	} else if (this.clickCount() < 15) {
-	// 		return 'teen';
-	// 	} else {
-	// 		return 'adult';
-	// 	}
-	// }, this);
-
-	// this.nickname = ko.observableArray(data.nickname);
 };
 
 var ViewModel = function() {
@@ -112,11 +95,6 @@ var ViewModel = function() {
 			});
 			return self.placeList();
 		} else {
-			// ko.utils.arrayForEach(self.placeList(), function(place) {
-			// 	var placeName = place.name.toLowerCase();
-			// 	var find = (placeName.search(input) >= 0);
-			// 	place.visible(find);
-			// });
 			return ko.utils.arrayFilter(self.placeList(), function(place) {
 				var placeName = place.name.toLowerCase();
 				// console.log(placeName.search(input));
@@ -127,19 +105,8 @@ var ViewModel = function() {
 		}
 	}, self);
 
-	this.mapElem = document.getElementById('map');
-	this.mapElem.style.height = window.innerHeight - 50;
-	// this.currentCat = ko.observable( this.catList()[0] );
-
-	// // this represents the current cat's binding context ("with: currentCat")
-	// this.incrementCounter = function() {
-	// 	this.clickCount(this.clickCount() + 1);
-	// };
-
-	// this.setCat = function(clickedCat) {
-	// 	// console.log('hi');
-	// 	self.currentCat(clickedCat);
-	// };
+	// this.mapElem = document.getElementById('map');
+	// this.mapElem.style.height = window.innerHeight - 50;
 
 	
 };
