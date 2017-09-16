@@ -4,8 +4,9 @@
 
 ```
 git clone https://github.com/jjjjohnson/Neighborbood-map-app.git
-cd yourFoler
 ```
+open file Neighborbood-map-app 
+double click index.html
 
 ## Introduction
 A single page application featuring a map of New york neighborhood is developed. This project is developed bearing the interactive and repoinsive performance in mind. The tools used are:
