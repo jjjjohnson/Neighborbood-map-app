@@ -39,7 +39,7 @@ var Place = function(data) {
 	var self = this;
 	this.visible = ko.observable(true);
 	this.name = data.name;
-	
+
 	// Add third-party api to self.info
 	var url = openWeatherUrl + key + '&lat=' + data.lat + '&lon=' + data.long;
 	$.ajax({
@@ -48,22 +48,23 @@ var Place = function(data) {
 	}).done(function(parsed) {
 		// console.log(parsed);
 		// console.log(parsed.main.temp);
-		// var parsed = json;
 		
 		self.info = 
 		`<div class="info">
-			<div><b>${self.name}<b></div>
+			<div>${self.name}</div>
 			<div>Weather: ${parsed.weather[0].description}</div>
-			<div>Temperature: ${parsed.main.temp} Celsius degree</div>
-			<div>Humidity: ${parsed.main.humidity} Celsius degree</div>
+			<div>Temperature: ${parsed.main.temp} celsius degree</div>
+			<div>Humidity: ${parsed.main.humidity} %</div>
 		</div>`;
+
+		self.infoWindow = new google.maps.InfoWindow({content: self.info});
 		
 	}).fail(function() {
 		alert('Cannot retrieve data from open weather!');
 	});
 
 	console.log(self.info);
-	this.infoWindow = new google.maps.InfoWindow({content: self.info});
+	
 	this.marker = new google.maps.Marker({
 			position: new google.maps.LatLng(data.lat, data.long),
 			title: data.name
@@ -110,8 +111,6 @@ var ViewModel = function() {
 	this.filteredList = ko.computed( function() {
 		var input = self.searchText().toLowerCase();
 		if (!input) {
-
-
 			// console.log('No input');
 			self.placeList().forEach(function(locationItem){
 				locationItem.visible(true);

@@ -53,7 +53,10 @@ body {
   /*width: 1050px;*/
   width: 78vw;
   margin-right:10px;
+}
 
+.info {
+  font-family: 'Asap Condensed', sans-serif;
 }
 
 
