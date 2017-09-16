@@ -24,9 +24,9 @@ var NYPlaces = [
 		long:  -73.989747
 	},
 	{
-		name: '69th Regiment Armory',
-		lat: 40.741255,
-		long: -73.983894
+		name: 'Battery Park',
+		lat: 40.703496,
+		long: -74.017079
 	},
 	{
 		name: 'Baruch College',
@@ -70,6 +70,9 @@ var Place = function(data) {
 			title: data.name
 	});
 
+
+	
+
 	this.showMarker = ko.computed(function() {
 		if (self.visible()) {
 			// To add the marker to the map, call setMap();
@@ -82,6 +85,11 @@ var Place = function(data) {
 
     this.marker.addListener('click', function() {
     	self.infoWindow.open(map, self.marker);
+    	// set time of animation 
+		self.marker.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function() {
+	      		self.marker.setAnimation(null);
+	     	}, 500);
     });
 
     this.showInfo = function() {
