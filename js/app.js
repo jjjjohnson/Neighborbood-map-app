@@ -39,27 +39,30 @@ var Place = function(data) {
 	var self = this;
 	this.visible = ko.observable(true);
 	this.name = data.name;
-
+	
 	// Add third-party api to self.info
 	var url = openWeatherUrl + key + '&lat=' + data.lat + '&lon=' + data.long;
-	console.log(url);
 	$.ajax({
-		url: url
-	}).done(function(json) {
-		console.log(json);
-		var parsed = loadJSON(json);
+		url: url,
+		dataType: "json"
+	}).done(function(parsed) {
+		// console.log(parsed);
+		// console.log(parsed.main.temp);
+		// var parsed = json;
 		
-		self.info = `<div class="info">
+		self.info = 
+		`<div class="info">
 			<div><b>${self.name}<b></div>
-			<div>Weather: ${parsed.weather.description}</div>
+			<div>Weather: ${parsed.weather[0].description}</div>
 			<div>Temperature: ${parsed.main.temp} Celsius degree</div>
 			<div>Humidity: ${parsed.main.humidity} Celsius degree</div>
 		</div>`;
+		
 	}).fail(function() {
 		alert('Cannot retrieve data from open weather!');
 	});
 
-	
+	console.log(self.info);
 	this.infoWindow = new google.maps.InfoWindow({content: self.info});
 	this.marker = new google.maps.Marker({
 			position: new google.maps.LatLng(data.lat, data.long),

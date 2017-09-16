@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-    <p>nihao</p>
+    
     <a id="menu" class="header__menu">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/path>
       </svg>
     </a>
 
+
     <nav id="drawer" class="nav open">
+      <h2>Neighborhood Map</h2>
       <input class="search-box" id="search-box" data-bind="textInput: searchText, valueUpdate: 'afterkeydown'" />
       <ul class="results" id="results" data-bind="foreach: filteredList">
-        <li class="place" data-bind="text: name, click: showInfo"></li>
+        <li class="place navbar-text" data-bind="text: name, click: showInfo"></li>
       </ul>
     </nav>
 

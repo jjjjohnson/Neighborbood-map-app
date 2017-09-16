@@ -9,7 +9,7 @@ body {
 }
 
 .header__menu {
-  display: block;
+  display: none;
   position: absolute;
   /*left: 0;*/
   padding: 1em;
@@ -20,9 +20,14 @@ body {
 }
 
 .nav {
-  z-index: 10;
+  margin-top: 5 0px;
+  height: 100vh;
+  float:left;
+  background-color: black;  
+  font-size: large;
+  z-index: 100;
   background-color: #fff;
-  width: 300px;
+  width: 20vw;
   position: absolute;
   /* This trasform moves the drawer off canvas. */
   -webkit-transform: translate(-300px, 0);
@@ -30,21 +35,24 @@ body {
   /* Optionally, we animate the drawer. */
   transition: transform 0.3s ease;
 }
+
 .nav.open {
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
 
+
 #map { 
  
-  /*flex-grow: 4;
+  flex-grow: 4;
   display: block;
-  height: 1000px;*/
+  height: 682px;
   position: absolute;
   right: 0;
   display: flex;
-  width: 75%;
-  height: 100%;
+  /*width: 1050px;*/
+  width: 78vw;
+  margin-right:10px;
 
 }
 
