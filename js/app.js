@@ -9,9 +9,9 @@ var NYPlaces = [
 		long: -73.985428
 	},
 	{
-		name: 'Madison Square Garden',
-		lat: 40.750298,
-		long: -73.993324
+		name: 'Jackson Heights',
+		lat: 40.7593218,
+		long: -73.9016138
 	},
 	{
 		name: 'Central Park',
@@ -19,9 +19,9 @@ var NYPlaces = [
 		long: -73.968285
 	},
 	{
-		name: 'Flatiron Building',
-		lat: 40.741534,
-		long:  -73.989747
+		name: 'Liberty State Park',
+		lat: 40.700563,
+		long:  -74.0478397
 	},
 	{
 		name: 'Battery Park',
@@ -29,9 +29,9 @@ var NYPlaces = [
 		long: -74.017079
 	},
 	{
-		name: 'Baruch College',
-		lat: 40.740190,
-		long:  -73.983347
+		name: 'West New York',
+		lat: 40.7855017,
+		long:  -74.0258009
 	}
 ];
 
