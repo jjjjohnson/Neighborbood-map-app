@@ -49,6 +49,7 @@ var Place = function(data) {
 		// console.log(parsed);
 		// console.log(parsed.main.temp);
 		
+		// add info window for each of the place
 		self.info = 
 		`<div class="info">
 			<div>${self.name}</div>
@@ -63,7 +64,6 @@ var Place = function(data) {
 		alert('Cannot retrieve data from open weather!');
 	});
 
-	console.log(self.info);
 	
 	this.marker = new google.maps.Marker({
 			position: new google.maps.LatLng(data.lat, data.long),
@@ -75,7 +75,7 @@ var Place = function(data) {
 			// To add the marker to the map, call setMap();
 			self.marker.setMap(map);
 		} else {
-			// now show on the map
+			// not show on the map
 			this.marker.setMap();
 		}
 	}, this);
@@ -102,19 +102,20 @@ var ViewModel = function() {
 	this.searchText = ko.observable("");
 
 	this.placeList = ko.observableArray([]);
+	//iterate through the places and make a ko.observable array
 	NYPlaces.forEach(function(data) {
 		self.placeList.push(new Place(data));
 	});
 
-
-
 	this.filteredList = ko.computed( function() {
 		var input = self.searchText().toLowerCase();
+		// check if the input is empty
 		if (!input) {
 			// console.log('No input');
 			self.placeList().forEach(function(locationItem){
 				locationItem.visible(true);
 			});
+			// show all the land markers
 			return self.placeList();
 		} else {
 			return ko.utils.arrayFilter(self.placeList(), function(place) {
@@ -135,6 +136,6 @@ function start() {
 	ko.applyBindings(new ViewModel());
 }
 
-function errorHandling() {
-	alert("Google Maps has failed to load. Please check your internet connection and try again.");
+function errorMsg() {
+	alert("Google Maps has failed to load.");
 }

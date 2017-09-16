@@ -9,25 +9,27 @@ body {
 }
 
 .header__menu {
-  display: none;
+  display: block;
   position: absolute;
-  /*left: 0;*/
   padding: 1em;
-  width: 100px;
+  width: 80px;
   fill: #E0E0E0;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+input {
+  width: 15vw;
 }
 
 .nav {
-  margin-top: 5 0px;
-  height: 100vh;
+  overflow:scroll;
+  margin-top: 70px;
+  height: 100%;
   float:left;
   background-color: black;  
   font-size: large;
   z-index: 100;
   background-color: #fff;
-  width: 20vw;
+  width: 15vw;
   position: absolute;
   /* This trasform moves the drawer off canvas. */
   -webkit-transform: translate(-300px, 0);
@@ -44,19 +46,36 @@ body {
 
 #map { 
  
-  flex-grow: 4;
+  flex-grow: 1;
   display: block;
   height: 682px;
   position: absolute;
   right: 0;
   display: flex;
-  /*width: 1050px;*/
-  width: 78vw;
+  width: 75vw;
+  /*width: auto;*/
   margin-right:10px;
+  /*overflow: scroll;*/
 }
 
 .info {
   font-family: 'Asap Condensed', sans-serif;
+}
+
+@media screen and (min-width: 800px) {
+
+  .nav {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  
+  #map {
+    width: 80vw;
+  }
+
+  .header__menu {
+    display: none;
+  }
 }
 
 
